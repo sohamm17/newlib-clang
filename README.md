@@ -42,3 +42,6 @@ I am indebted to the following sources while I was modifying the toolchain:
 - clang modification source
 
 The toolchain and infrastructure were built by the Quest OS team over a number of years. I have just changed it to be compiled with `clang`. This approach is free to be replicated. Please give credit where it is due.
+
+##### Bonus
+I could not build newlib for Linux (x86 and x86_64). There are tons of errors which are not worth solving, I suppose. I tried a little solving errors related to preprocessor directives in `pthread`, etc, but gave up.
