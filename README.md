@@ -1,27 +1,27 @@
 This is a version of newlib which is compiled with Clang 5.0.1 . This newlib is  compiled for our own Quest OS which will work on bare metal x86 (32-bit). Therefore, we also provide our own system calls in library files (inside `newlib/libc/sys/quest/`).
 
-###Toolchain
+### Toolchain
 Our toolchain is a little complicated because we have architecture (x86 and arm) dependent and independent files. At the same time, the toolchain might be helpful for other people who are trying to build newlib for their bare metal OS. Therefore, I am keeping the whole toolchain. We copy our system calls into newlib and configure (via patch) the toolchain to recognize our Quest OS and build the C files.
 
-#####Changes:
+##### Changes:
 To make it compatible for clang, I edited a few files:
 
-######newlib/libm/machine/i386/f_ldexp.S
-######newlib/libm/machine/i386/f_ldexpf.S
+###### newlib/libm/machine/i386/f_ldexp.S
+###### newlib/libm/machine/i386/f_ldexpf.S
 gcc accepts (and quitely makes assumptions) ambiguous assembly instructions, which clang doesn't I added such `fild` instructions to `filds`.
 
 Additionally, `libgloss/libnosys/configure` seems to have different expectations for target. I had to edit that as well for our target. Other than those, most of the rest of the patch is according to [OS Dev's instruction for porting newlib for a custom OS](https://wiki.osdev.org/Porting_Newlib).
 
-###Configuration
+### Configuration
 
-####Changes you need to make to build newlib for your OS
+#### Changes you need to make to build newlib for your OS
 
 - Open the `Makefile` and change variables as needed. For example, change your `target`. Our `target` is i586-pc-quest is of the format architecture-vendor-os. This can be confusing because mostly there is no standard. newlib also takes x86-elf as valid. Check whether target could be supported by running `config.sub`.
 - Make sure to change `LLVM_BIN`. I have used my custom built LLVM. In your case, it can be as simple as `/usr/bin` if you have install llvm and clang in your host system.
 - Follow the Makefile. I have written some importatn instructions there as well.
 - Look at the newlib.patch file. It makes some important chanegs.
 
-####Porting newlib for your new custom OS
+#### Porting newlib for your new custom OS
 Follow [OS Dev's instruction for porting newlib for a custom OS](https://wiki.osdev.org/Porting_Newlib). Here's what we do briefly:
 
 1. We write architecture dependent library functions (system calls, etc.) in a directory (`arch`) and architecture-independent in another directory (`quest-files`). 
