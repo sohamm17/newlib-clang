@@ -20,6 +20,8 @@ Additionally, `libgloss/libnosys/configure` seems to have different expectations
 - Make sure to change `LLVM_BIN`. I have used my custom built LLVM. In your case, it can be as simple as `/usr/bin` if you have install llvm and clang in your host system.
 - Follow the Makefile. I have written some importatn instructions there as well.
 - Look at the newlib.patch file. It makes some important chanegs.
+- Create an empty build directory with the same name given in `LIBC_BUILD_DIR` in `Makefile`. Then call `make` in the top level directory. It will go inside the build directory and call necessary script.
+- When rebuilding make sure to call `make clean && make uninstall`
 
 #### Porting newlib for your new custom OS
 Follow [OS Dev's instruction for porting newlib for a custom OS](https://wiki.osdev.org/Porting_Newlib). Here's what we do briefly:
