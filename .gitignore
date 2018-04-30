@@ -59,6 +59,7 @@ build-glib
 install-newlib-clang-linux
 install-newlib-gcc
 note.txt
-.bak
+*.bak
+*backup
 autoconf-2.63
 automake-1.11
